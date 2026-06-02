@@ -45,9 +45,25 @@ public class MenuPrincipalFrame extends JFrame {
             }
         });
 
+        JMenuItem itemGestionarServicios = new JMenuItem("Gestionar servicios");
+
+        itemGestionarServicios.addActionListener(e -> {
+            new ServicioFrame().setVisible(true);
+        });
+
+        JMenuItem itemGestionarBarberos =
+                new JMenuItem("Gestionar barberos");
+
+        itemGestionarBarberos.addActionListener(e -> {
+            new BarberoFrame().setVisible(true);
+        });
+
+        menuBarberos.add(itemGestionarBarberos);
+
+
+        menuServicios.add(itemGestionarServicios);
         menuClientes.add(itemGestionarClientes);
         menuSistema.add(itemSalir);
-
         menuBar.add(menuClientes);
         menuBar.add(menuServicios);
         menuBar.add(menuBarberos);
