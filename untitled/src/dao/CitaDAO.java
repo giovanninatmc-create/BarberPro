@@ -6,6 +6,8 @@ import modelo.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class CitaDAO {
 
@@ -123,5 +125,34 @@ public class CitaDAO {
             System.out.println("Error al eliminar cita: " + e.getMessage());
             return false;
         }
+    }
+    public boolean existeCitaEnHorario(int idBarbero, LocalDate fecha, LocalTime hora) {
+        String sql = """
+            SELECT COUNT(*) 
+            FROM cita
+            WHERE id_barbero = ?
+            AND fecha = ?
+            AND hora = ?
+            AND estado = 'Programada'
+            """;
+
+        try (Connection conexion = ConexionBD.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setInt(1, idBarbero);
+            ps.setDate(2, Date.valueOf(fecha));
+            ps.setTime(3, Time.valueOf(hora));
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al validar horario: " + e.getMessage());
+        }
+
+        return false;
     }
 }

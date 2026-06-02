@@ -192,6 +192,18 @@ public class CitaFrame extends JFrame {
             cita.setHora(LocalTime.parse(txtHora.getText()));
             cita.setEstado(cmbEstado.getSelectedItem().toString());
 
+            if (citaDAO.existeCitaEnHorario(
+                    cita.getBarbero().getIdBarbero(),
+                    cita.getFecha(),
+                    cita.getHora())) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "El barbero ya tiene una cita programada en ese horario"
+                );
+                return;
+            }
+
             if (citaDAO.guardar(cita)) {
                 JOptionPane.showMessageDialog(this, "Cita guardada correctamente");
                 cargarCitas();
