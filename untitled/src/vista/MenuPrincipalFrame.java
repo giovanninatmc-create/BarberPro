@@ -58,6 +58,15 @@ public class MenuPrincipalFrame extends JFrame {
             new BarberoFrame().setVisible(true);
         });
 
+        JMenuItem itemGestionarCitas = new JMenuItem("Gestionar citas");
+
+
+        itemGestionarCitas.addActionListener(e -> {
+            new CitaFrame().setVisible(true);
+        });
+
+        menuCitas.add(itemGestionarCitas);
+
         menuBarberos.add(itemGestionarBarberos);
 
 

@@ -107,4 +107,8 @@ public class ClienteDAO {
             return false;
         }
     }
+    public List<Cliente> obtenerTodos() {
+        return listar();
+    }
+
 }

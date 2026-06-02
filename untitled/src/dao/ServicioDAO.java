@@ -107,4 +107,7 @@ public class ServicioDAO {
             return false;
         }
     }
+    public List<Servicio> obtenerTodos() {
+        return listar();
+    }
 }

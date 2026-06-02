@@ -153,4 +153,7 @@ public class BarberoDAO {
             return false;
         }
     }
+    public List<Barbero> obtenerTodos() {
+        return listar();
+    }
 }
