@@ -1,0 +1,110 @@
+package dao;
+
+import conexion.ConexionBD;
+import modelo.Cliente;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClienteDAO {
+
+    public boolean guardar(Cliente cliente) {
+        String sql = """
+                INSERT INTO cliente(nombre, telefono, correo, fecha_registro)
+                VALUES (?, ?, ?, ?)
+                """;
+
+        try (Connection conexion = ConexionBD.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getTelefono());
+            ps.setString(3, cliente.getCorreo());
+            ps.setDate(4, Date.valueOf(cliente.getFechaRegistro()));
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error al guardar cliente: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public List<Cliente> listar() {
+        List<Cliente> clientes = new ArrayList<>();
+
+        String sql = """
+                SELECT id_cliente, nombre, telefono, correo, fecha_registro
+                FROM cliente
+                ORDER BY id_cliente DESC
+                """;
+
+        try (Connection conexion = ConexionBD.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+
+                cliente.setIdCliente(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setTelefono(rs.getString("telefono"));
+                cliente.setCorreo(rs.getString("correo"));
+
+                Date fecha = rs.getDate("fecha_registro");
+                cliente.setFechaRegistro(fecha.toLocalDate());
+
+                clientes.add(cliente);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al listar clientes: " + e.getMessage());
+        }
+
+        return clientes;
+    }
+
+    public boolean actualizar(Cliente cliente) {
+        String sql = """
+                UPDATE cliente
+                SET nombre = ?, telefono = ?, correo = ?
+                WHERE id_cliente = ?
+                """;
+
+        try (Connection conexion = ConexionBD.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getTelefono());
+            ps.setString(3, cliente.getCorreo());
+            ps.setInt(4, cliente.getIdCliente());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar cliente: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminar(int idCliente) {
+        String sql = """
+                DELETE FROM cliente
+                WHERE id_cliente = ?
+                """;
+
+        try (Connection conexion = ConexionBD.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setInt(1, idCliente);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar cliente: " + e.getMessage());
+            return false;
+        }
+    }
+}
