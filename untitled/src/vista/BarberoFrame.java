@@ -28,7 +28,7 @@ public class BarberoFrame extends JFrame {
         barberoDAO = new BarberoDAO();
 
         setTitle("BarberPro - Gestión de Barberos");
-        setSize(900, 550);
+        setSize(920, 580);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -40,86 +40,111 @@ public class BarberoFrame extends JFrame {
     private void inicializarComponentes() {
 
         setLayout(null);
+        Estilos.aplicarFondo(this);
 
-        JLabel lblTitulo = new JLabel("GESTIÓN DE BARBEROS");
-        lblTitulo.setBounds(360, 20, 200, 30);
+        JLabel lblTitulo =
+                new JLabel("GESTIÓN DE BARBEROS");
+
+        lblTitulo.setBounds(
+                300,
+                20,
+                350,
+                35);
+
+        Estilos.titulo(lblTitulo);
+
         add(lblTitulo);
 
         JLabel lblId = new JLabel("ID:");
-        lblId.setBounds(40, 70, 100, 25);
+        lblId.setBounds(40, 80, 100, 25);
+        Estilos.texto(lblId);
         add(lblId);
 
         txtId = new JTextField();
-        txtId.setBounds(140, 70, 100, 25);
+        txtId.setBounds(140, 80, 100, 25);
         txtId.setEditable(false);
         add(txtId);
 
         JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setBounds(40, 110, 100, 25);
+        lblNombre.setBounds(40, 120, 100, 25);
+        Estilos.texto(lblNombre);
         add(lblNombre);
 
         txtNombre = new JTextField();
-        txtNombre.setBounds(140, 110, 250, 25);
+        txtNombre.setBounds(140, 120, 250, 25);
         add(txtNombre);
 
         JLabel lblTelefono = new JLabel("Teléfono:");
-        lblTelefono.setBounds(40, 150, 100, 25);
+        lblTelefono.setBounds(40, 160, 100, 25);
+        Estilos.texto(lblTelefono);
         add(lblTelefono);
 
         txtTelefono = new JTextField();
-        txtTelefono.setBounds(140, 150, 250, 25);
+        txtTelefono.setBounds(140, 160, 250, 25);
         add(txtTelefono);
 
         JLabel lblCorreo = new JLabel("Correo:");
-        lblCorreo.setBounds(40, 190, 100, 25);
+        lblCorreo.setBounds(40, 200, 100, 25);
+        Estilos.texto(lblCorreo);
         add(lblCorreo);
 
         txtCorreo = new JTextField();
-        txtCorreo.setBounds(140, 190, 250, 25);
+        txtCorreo.setBounds(140, 200, 250, 25);
         add(txtCorreo);
 
         JLabel lblEspecialidad = new JLabel("Especialidad:");
-        lblEspecialidad.setBounds(40, 230, 100, 25);
+        lblEspecialidad.setBounds(40, 240, 100, 25);
+        Estilos.texto(lblEspecialidad);
         add(lblEspecialidad);
 
         txtEspecialidad = new JTextField();
-        txtEspecialidad.setBounds(140, 230, 250, 25);
+        txtEspecialidad.setBounds(140, 240, 250, 25);
         add(txtEspecialidad);
 
         JLabel lblHorario = new JLabel("Horario:");
-        lblHorario.setBounds(40, 270, 100, 25);
+        lblHorario.setBounds(40, 280, 100, 25);
+        Estilos.texto(lblHorario);
         add(lblHorario);
 
         txtHorario = new JTextField();
-        txtHorario.setBounds(140, 270, 250, 25);
+        txtHorario.setBounds(140, 280, 250, 25);
         add(txtHorario);
 
         JLabel lblEstado = new JLabel("Estado:");
-        lblEstado.setBounds(40, 310, 100, 25);
+        lblEstado.setBounds(40, 320, 100, 25);
+        Estilos.texto(lblEstado);
         add(lblEstado);
 
         cmbEstado = new JComboBox<>(
                 new String[]{"Activo", "Inactivo"}
         );
 
-        cmbEstado.setBounds(140, 310, 250, 25);
+        cmbEstado.setBounds(140, 320, 250, 25);
         add(cmbEstado);
 
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(500, 90, 130, 30);
+        btnGuardar.setBounds(520, 100, 130, 32);
+        Estilos.botonPrimario(btnGuardar);
         add(btnGuardar);
 
         JButton btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(680, 90, 130, 30);
+        btnActualizar.setBounds(700, 100, 130, 32);
+        Estilos.botonSecundario(btnActualizar);
         add(btnActualizar);
 
         JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(500, 140, 130, 30);
+        btnEliminar.setBounds(520, 155, 130, 32);
+        Estilos.botonSecundario(btnEliminar);
         add(btnEliminar);
 
         JButton btnLimpiar = new JButton("Limpiar");
-        btnLimpiar.setBounds(680, 140, 130, 30);
+        btnLimpiar.setBounds(700, 155, 130, 32);
+        Estilos.botonSecundario(btnLimpiar);
         add(btnLimpiar);
+
+        JSeparator separador = new JSeparator();
+        separador.setBounds(40, 380, 820, 10);
+        add(separador);
 
         modeloTabla = new DefaultTableModel();
 
@@ -133,10 +158,16 @@ public class BarberoFrame extends JFrame {
 
         tablaBarberos = new JTable(modeloTabla);
 
+        Estilos.tabla(tablaBarberos);
+
         JScrollPane scroll =
                 new JScrollPane(tablaBarberos);
 
-        scroll.setBounds(40, 370, 800, 120);
+        scroll.setBounds(
+                40,
+                400,
+                820,
+                120);
 
         add(scroll);
 
@@ -157,9 +188,11 @@ public class BarberoFrame extends JFrame {
     private void guardarBarbero() {
 
         if (txtNombre.getText().isEmpty()) {
+
             JOptionPane.showMessageDialog(
                     this,
                     "El nombre es obligatorio");
+
             return;
         }
 
@@ -170,6 +203,7 @@ public class BarberoFrame extends JFrame {
         barbero.setCorreo(txtCorreo.getText());
         barbero.setEspecialidad(txtEspecialidad.getText());
         barbero.setHorarioDisponible(txtHorario.getText());
+
         barbero.setEstado(
                 cmbEstado.getSelectedItem().toString());
 
@@ -215,28 +249,16 @@ public class BarberoFrame extends JFrame {
 
     private void seleccionarBarbero() {
 
-        int fila =
-                tablaBarberos.getSelectedRow();
+        int fila = tablaBarberos.getSelectedRow();
 
         if (fila >= 0) {
 
-            txtId.setText(
-                    modeloTabla.getValueAt(fila,0).toString());
-
-            txtNombre.setText(
-                    modeloTabla.getValueAt(fila,1).toString());
-
-            txtTelefono.setText(
-                    modeloTabla.getValueAt(fila,2).toString());
-
-            txtCorreo.setText(
-                    modeloTabla.getValueAt(fila,3).toString());
-
-            txtEspecialidad.setText(
-                    modeloTabla.getValueAt(fila,4).toString());
-
-            txtHorario.setText(
-                    modeloTabla.getValueAt(fila,5).toString());
+            txtId.setText(modeloTabla.getValueAt(fila,0).toString());
+            txtNombre.setText(modeloTabla.getValueAt(fila,1).toString());
+            txtTelefono.setText(modeloTabla.getValueAt(fila,2).toString());
+            txtCorreo.setText(modeloTabla.getValueAt(fila,3).toString());
+            txtEspecialidad.setText(modeloTabla.getValueAt(fila,4).toString());
+            txtHorario.setText(modeloTabla.getValueAt(fila,5).toString());
 
             cmbEstado.setSelectedItem(
                     modeloTabla.getValueAt(fila,6).toString());

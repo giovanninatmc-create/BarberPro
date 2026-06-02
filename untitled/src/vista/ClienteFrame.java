@@ -29,7 +29,7 @@ public class ClienteFrame extends JFrame {
         clienteDAO = new ClienteDAO();
 
         setTitle("BarberPro - Gestión de Clientes");
-        setSize(750, 500);
+        setSize(760, 520);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -40,59 +40,73 @@ public class ClienteFrame extends JFrame {
 
     private void inicializarComponentes() {
         setLayout(null);
+        Estilos.aplicarFondo(this);
 
         JLabel lblTitulo = new JLabel("GESTIÓN DE CLIENTES");
-        lblTitulo.setBounds(280, 20, 250, 30);
+        lblTitulo.setBounds(260, 20, 300, 35);
+        Estilos.titulo(lblTitulo);
         add(lblTitulo);
 
         JLabel lblId = new JLabel("ID:");
-        lblId.setBounds(40, 70, 100, 25);
+        lblId.setBounds(40, 80, 100, 25);
+        Estilos.texto(lblId);
         add(lblId);
 
         txtId = new JTextField();
-        txtId.setBounds(130, 70, 80, 25);
+        txtId.setBounds(130, 80, 80, 25);
         txtId.setEditable(false);
         add(txtId);
 
         JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setBounds(40, 110, 100, 25);
+        lblNombre.setBounds(40, 120, 100, 25);
+        Estilos.texto(lblNombre);
         add(lblNombre);
 
         txtNombre = new JTextField();
-        txtNombre.setBounds(130, 110, 220, 25);
+        txtNombre.setBounds(130, 120, 220, 25);
         add(txtNombre);
 
         JLabel lblTelefono = new JLabel("Teléfono:");
-        lblTelefono.setBounds(40, 150, 100, 25);
+        lblTelefono.setBounds(40, 160, 100, 25);
+        Estilos.texto(lblTelefono);
         add(lblTelefono);
 
         txtTelefono = new JTextField();
-        txtTelefono.setBounds(130, 150, 220, 25);
+        txtTelefono.setBounds(130, 160, 220, 25);
         add(txtTelefono);
 
         JLabel lblCorreo = new JLabel("Correo:");
-        lblCorreo.setBounds(40, 190, 100, 25);
+        lblCorreo.setBounds(40, 200, 100, 25);
+        Estilos.texto(lblCorreo);
         add(lblCorreo);
 
         txtCorreo = new JTextField();
-        txtCorreo.setBounds(130, 190, 220, 25);
+        txtCorreo.setBounds(130, 200, 220, 25);
         add(txtCorreo);
 
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(400, 80, 120, 30);
+        btnGuardar.setBounds(410, 90, 120, 32);
+        Estilos.botonPrimario(btnGuardar);
         add(btnGuardar);
 
         btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(550, 80, 120, 30);
+        btnActualizar.setBounds(560, 90, 120, 32);
+        Estilos.botonSecundario(btnActualizar);
         add(btnActualizar);
 
         btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(400, 130, 120, 30);
+        btnEliminar.setBounds(410, 145, 120, 32);
+        Estilos.botonSecundario(btnEliminar);
         add(btnEliminar);
 
         btnLimpiar = new JButton("Limpiar");
-        btnLimpiar.setBounds(550, 130, 120, 30);
+        btnLimpiar.setBounds(560, 145, 120, 32);
+        Estilos.botonSecundario(btnLimpiar);
         add(btnLimpiar);
+
+        JSeparator separador = new JSeparator();
+        separador.setBounds(40, 250, 650, 10);
+        add(separador);
 
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("ID");
@@ -102,9 +116,10 @@ public class ClienteFrame extends JFrame {
         modeloTabla.addColumn("Fecha Registro");
 
         tablaClientes = new JTable(modeloTabla);
+        Estilos.tabla(tablaClientes);
 
         JScrollPane scroll = new JScrollPane(tablaClientes);
-        scroll.setBounds(40, 250, 650, 180);
+        scroll.setBounds(40, 270, 650, 180);
         add(scroll);
 
         btnGuardar.addActionListener(e -> guardarCliente());

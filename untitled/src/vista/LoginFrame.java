@@ -1,7 +1,7 @@
 package vista;
 
 import dao.UsuarioDAO;
-import vista.MenuPrincipalFrame;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,12 +9,10 @@ public class LoginFrame extends JFrame {
 
     private JTextField txtUsuario;
     private JPasswordField txtPassword;
-    private JButton btnIngresar;
 
     public LoginFrame() {
-
         setTitle("BarberPro - Inicio de Sesión");
-        setSize(400, 250);
+        setSize(430, 320);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -23,115 +21,59 @@ public class LoginFrame extends JFrame {
     }
 
     private void inicializarComponentes() {
-
         setLayout(null);
+        Estilos.aplicarFondo(this);
 
-        JLabel lblTitulo =
-                new JLabel("BARBERPRO");
-
-        lblTitulo.setFont(
-                new Font("Arial",
-                        Font.BOLD,
-                        20));
-
-        lblTitulo.setBounds(
-                130,
-                20,
-                150,
-                30);
-
+        JLabel lblTitulo = new JLabel("BARBER PRO");
+        lblTitulo.setBounds(130, 35, 220, 35);
+        Estilos.titulo(lblTitulo);
         add(lblTitulo);
 
-        JLabel lblUsuario =
-                new JLabel("Usuario:");
+        JLabel lblSubtitulo = new JLabel("Sistema de gestión de barbería");
+        lblSubtitulo.setBounds(105, 70, 260, 25);
+        lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblSubtitulo.setForeground(Estilos.AZUL);
+        add(lblSubtitulo);
 
-        lblUsuario.setBounds(
-                50,
-                80,
-                100,
-                25);
-
+        JLabel lblUsuario = new JLabel("Usuario:");
+        lblUsuario.setBounds(55, 125, 100, 25);
+        Estilos.texto(lblUsuario);
         add(lblUsuario);
 
-        txtUsuario =
-                new JTextField();
-
-        txtUsuario.setBounds(
-                140,
-                80,
-                180,
-                25);
-
+        txtUsuario = new JTextField();
+        txtUsuario.setBounds(160, 125, 200, 28);
         add(txtUsuario);
 
-        JLabel lblPassword =
-                new JLabel("Contraseña:");
-
-        lblPassword.setBounds(
-                50,
-                120,
-                100,
-                25);
-
+        JLabel lblPassword = new JLabel("Contraseña:");
+        lblPassword.setBounds(55, 165, 100, 25);
+        Estilos.texto(lblPassword);
         add(lblPassword);
 
-        txtPassword =
-                new JPasswordField();
-
-        txtPassword.setBounds(
-                140,
-                120,
-                180,
-                25);
-
+        txtPassword = new JPasswordField();
+        txtPassword.setBounds(160, 165, 200, 28);
         add(txtPassword);
 
-        btnIngresar =
-                new JButton("Ingresar");
-
-        btnIngresar.setBounds(
-                140,
-                165,
-                120,
-                30);
-
+        JButton btnIngresar = new JButton("Ingresar");
+        btnIngresar.setBounds(160, 220, 130, 35);
+        Estilos.botonPrimario(btnIngresar);
         add(btnIngresar);
 
         btnIngresar.addActionListener(e -> iniciarSesion());
     }
 
     private void iniciarSesion() {
+        String usuario = txtUsuario.getText();
+        String contrasena = new String(txtPassword.getPassword());
 
-        String usuario =
-                txtUsuario.getText();
-
-        String contrasena =
-                new String(
-                        txtPassword.getPassword());
-
-        UsuarioDAO dao =
-                new UsuarioDAO();
-
-        boolean acceso =
-                dao.validarLogin(
-                        usuario,
-                        contrasena);
+        UsuarioDAO dao = new UsuarioDAO();
+        boolean acceso = dao.validarLogin(usuario, contrasena);
 
         if (acceso) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Bienvenido a BarberPro");
-
+            JOptionPane.showMessageDialog(this, "Bienvenido a BarberPro");
             new MenuPrincipalFrame().setVisible(true);
-
             dispose();
-
         } else {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Usuario o contraseña incorrectos");
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
         }
     }
 }

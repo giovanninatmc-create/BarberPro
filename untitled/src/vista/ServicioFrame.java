@@ -25,7 +25,7 @@ public class ServicioFrame extends JFrame {
         servicioDAO = new ServicioDAO();
 
         setTitle("BarberPro - Gestión de Servicios");
-        setSize(800, 520);
+        setSize(820, 540);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -36,75 +36,91 @@ public class ServicioFrame extends JFrame {
 
     private void inicializarComponentes() {
         setLayout(null);
+        Estilos.aplicarFondo(this);
 
         JLabel lblTitulo = new JLabel("GESTIÓN DE SERVICIOS");
-        lblTitulo.setBounds(310, 20, 250, 30);
+        lblTitulo.setBounds(270, 20, 320, 35);
+        Estilos.titulo(lblTitulo);
         add(lblTitulo);
 
         JLabel lblId = new JLabel("ID:");
-        lblId.setBounds(40, 70, 100, 25);
+        lblId.setBounds(40, 80, 100, 25);
+        Estilos.texto(lblId);
         add(lblId);
 
         txtId = new JTextField();
-        txtId.setBounds(140, 70, 80, 25);
+        txtId.setBounds(140, 80, 80, 25);
         txtId.setEditable(false);
         add(txtId);
 
         JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setBounds(40, 110, 100, 25);
+        lblNombre.setBounds(40, 120, 100, 25);
+        Estilos.texto(lblNombre);
         add(lblNombre);
 
         txtNombre = new JTextField();
-        txtNombre.setBounds(140, 110, 230, 25);
+        txtNombre.setBounds(140, 120, 230, 25);
         add(txtNombre);
 
         JLabel lblDescripcion = new JLabel("Descripción:");
-        lblDescripcion.setBounds(40, 150, 100, 25);
+        lblDescripcion.setBounds(40, 160, 100, 25);
+        Estilos.texto(lblDescripcion);
         add(lblDescripcion);
 
         txtDescripcion = new JTextField();
-        txtDescripcion.setBounds(140, 150, 230, 25);
+        txtDescripcion.setBounds(140, 160, 230, 25);
         add(txtDescripcion);
 
         JLabel lblDuracion = new JLabel("Duración:");
-        lblDuracion.setBounds(40, 190, 100, 25);
+        lblDuracion.setBounds(40, 200, 100, 25);
+        Estilos.texto(lblDuracion);
         add(lblDuracion);
 
         txtDuracion = new JTextField();
-        txtDuracion.setBounds(140, 190, 230, 25);
+        txtDuracion.setBounds(140, 200, 230, 25);
         add(txtDuracion);
 
         JLabel lblPrecio = new JLabel("Precio:");
-        lblPrecio.setBounds(40, 230, 100, 25);
+        lblPrecio.setBounds(40, 240, 100, 25);
+        Estilos.texto(lblPrecio);
         add(lblPrecio);
 
         txtPrecio = new JTextField();
-        txtPrecio.setBounds(140, 230, 230, 25);
+        txtPrecio.setBounds(140, 240, 230, 25);
         add(txtPrecio);
 
         JLabel lblEstado = new JLabel("Estado:");
-        lblEstado.setBounds(40, 270, 100, 25);
+        lblEstado.setBounds(40, 280, 100, 25);
+        Estilos.texto(lblEstado);
         add(lblEstado);
 
         cmbEstado = new JComboBox<>(new String[]{"Activo", "Inactivo"});
-        cmbEstado.setBounds(140, 270, 230, 25);
+        cmbEstado.setBounds(140, 280, 230, 25);
         add(cmbEstado);
 
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(450, 90, 120, 30);
+        btnGuardar.setBounds(470, 100, 120, 32);
+        Estilos.botonPrimario(btnGuardar);
         add(btnGuardar);
 
         JButton btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(600, 90, 120, 30);
+        btnActualizar.setBounds(620, 100, 120, 32);
+        Estilos.botonSecundario(btnActualizar);
         add(btnActualizar);
 
         JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(450, 140, 120, 30);
+        btnEliminar.setBounds(470, 155, 120, 32);
+        Estilos.botonSecundario(btnEliminar);
         add(btnEliminar);
 
         JButton btnLimpiar = new JButton("Limpiar");
-        btnLimpiar.setBounds(600, 140, 120, 30);
+        btnLimpiar.setBounds(620, 155, 120, 32);
+        Estilos.botonSecundario(btnLimpiar);
         add(btnLimpiar);
+
+        JSeparator separador = new JSeparator();
+        separador.setBounds(40, 330, 700, 10);
+        add(separador);
 
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("ID");
@@ -115,9 +131,10 @@ public class ServicioFrame extends JFrame {
         modeloTabla.addColumn("Estado");
 
         tablaServicios = new JTable(modeloTabla);
+        Estilos.tabla(tablaServicios);
 
         JScrollPane scroll = new JScrollPane(tablaServicios);
-        scroll.setBounds(40, 330, 700, 130);
+        scroll.setBounds(40, 350, 700, 130);
         add(scroll);
 
         btnGuardar.addActionListener(e -> guardarServicio());

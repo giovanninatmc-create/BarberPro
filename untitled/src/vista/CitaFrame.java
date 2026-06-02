@@ -35,7 +35,7 @@ public class CitaFrame extends JFrame {
         servicioDAO = new ServicioDAO();
 
         setTitle("BarberPro - Gestión de Citas");
-        setSize(950, 560);
+        setSize(950, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -47,85 +47,102 @@ public class CitaFrame extends JFrame {
 
     private void inicializarComponentes() {
         setLayout(null);
+        Estilos.aplicarFondo(this);
 
         JLabel lblTitulo = new JLabel("GESTIÓN DE CITAS");
-        lblTitulo.setBounds(400, 20, 200, 30);
+        lblTitulo.setBounds(340, 20, 300, 35);
+        Estilos.titulo(lblTitulo);
         add(lblTitulo);
 
         JLabel lblId = new JLabel("ID:");
-        lblId.setBounds(40, 70, 100, 25);
+        lblId.setBounds(40, 80, 100, 25);
+        Estilos.texto(lblId);
         add(lblId);
 
         txtId = new JTextField();
-        txtId.setBounds(150, 70, 100, 25);
+        txtId.setBounds(150, 80, 100, 25);
         txtId.setEditable(false);
         add(txtId);
 
         JLabel lblCliente = new JLabel("Cliente:");
-        lblCliente.setBounds(40, 110, 100, 25);
+        lblCliente.setBounds(40, 120, 100, 25);
+        Estilos.texto(lblCliente);
         add(lblCliente);
 
         cmbCliente = new JComboBox<>();
-        cmbCliente.setBounds(150, 110, 260, 25);
+        cmbCliente.setBounds(150, 120, 260, 25);
         add(cmbCliente);
 
         JLabel lblBarbero = new JLabel("Barbero:");
-        lblBarbero.setBounds(40, 150, 100, 25);
+        lblBarbero.setBounds(40, 160, 100, 25);
+        Estilos.texto(lblBarbero);
         add(lblBarbero);
 
         cmbBarbero = new JComboBox<>();
-        cmbBarbero.setBounds(150, 150, 260, 25);
+        cmbBarbero.setBounds(150, 160, 260, 25);
         add(cmbBarbero);
 
         JLabel lblServicio = new JLabel("Servicio:");
-        lblServicio.setBounds(40, 190, 100, 25);
+        lblServicio.setBounds(40, 200, 100, 25);
+        Estilos.texto(lblServicio);
         add(lblServicio);
 
         cmbServicio = new JComboBox<>();
-        cmbServicio.setBounds(150, 190, 260, 25);
+        cmbServicio.setBounds(150, 200, 260, 25);
         add(cmbServicio);
 
         JLabel lblFecha = new JLabel("Fecha:");
-        lblFecha.setBounds(40, 230, 100, 25);
+        lblFecha.setBounds(40, 240, 100, 25);
+        Estilos.texto(lblFecha);
         add(lblFecha);
 
         txtFecha = new JTextField();
-        txtFecha.setBounds(150, 230, 260, 25);
+        txtFecha.setBounds(150, 240, 260, 25);
         txtFecha.setText(LocalDate.now().toString());
         add(txtFecha);
 
         JLabel lblHora = new JLabel("Hora:");
-        lblHora.setBounds(40, 270, 100, 25);
+        lblHora.setBounds(40, 280, 100, 25);
+        Estilos.texto(lblHora);
         add(lblHora);
 
         txtHora = new JTextField();
-        txtHora.setBounds(150, 270, 260, 25);
+        txtHora.setBounds(150, 280, 260, 25);
         txtHora.setText("10:00");
         add(txtHora);
 
         JLabel lblEstado = new JLabel("Estado:");
-        lblEstado.setBounds(40, 310, 100, 25);
+        lblEstado.setBounds(40, 320, 100, 25);
+        Estilos.texto(lblEstado);
         add(lblEstado);
 
         cmbEstado = new JComboBox<>(new String[]{"Programada", "Cancelada", "Finalizada"});
-        cmbEstado.setBounds(150, 310, 260, 25);
+        cmbEstado.setBounds(150, 320, 260, 25);
         add(cmbEstado);
 
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(500, 100, 130, 30);
+        btnGuardar.setBounds(520, 100, 130, 32);
+        Estilos.botonPrimario(btnGuardar);
         add(btnGuardar);
 
         JButton btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(680, 100, 130, 30);
+        btnActualizar.setBounds(700, 100, 130, 32);
+        Estilos.botonSecundario(btnActualizar);
         add(btnActualizar);
 
         JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(500, 150, 130, 30);
+        btnEliminar.setBounds(520, 155, 130, 32);
+        Estilos.botonSecundario(btnEliminar);
         add(btnEliminar);
 
         JButton btnLimpiar = new JButton("Limpiar");
-        btnLimpiar.setBounds(680, 150, 130, 30);
+        btnLimpiar.setBounds(700, 155, 130, 32);
+        Estilos.botonSecundario(btnLimpiar);
         add(btnLimpiar);
+
+        JSeparator separador = new JSeparator();
+        separador.setBounds(40, 370, 850, 10);
+        add(separador);
 
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("ID");
@@ -137,9 +154,10 @@ public class CitaFrame extends JFrame {
         modeloTabla.addColumn("Estado");
 
         tablaCitas = new JTable(modeloTabla);
+        Estilos.tabla(tablaCitas);
 
         JScrollPane scroll = new JScrollPane(tablaCitas);
-        scroll.setBounds(40, 370, 850, 120);
+        scroll.setBounds(40, 390, 850, 120);
         add(scroll);
 
         btnGuardar.addActionListener(e -> guardarCita());
