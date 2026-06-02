@@ -65,6 +65,14 @@ public class MenuPrincipalFrame extends JFrame {
             new CitaFrame().setVisible(true);
         });
 
+        JMenuItem itemVerReportes = new JMenuItem("Ver reportes");
+
+        itemVerReportes.addActionListener(e -> {
+            new ReporteFrame().setVisible(true);
+        });
+
+        menuReportes.add(itemVerReportes);
+
         menuCitas.add(itemGestionarCitas);
 
         menuBarberos.add(itemGestionarBarberos);
