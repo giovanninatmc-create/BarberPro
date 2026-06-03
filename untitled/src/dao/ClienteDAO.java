@@ -22,7 +22,7 @@ public class ClienteDAO {
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getTelefono());
             ps.setString(3, cliente.getCorreo());
-            ps.setDate(4, Date.valueOf(cliente.getFechaRegistro()));
+            ps.setString(4, cliente.getFechaRegistro().toString());
 
             return ps.executeUpdate() > 0;
 
@@ -53,8 +53,11 @@ public class ClienteDAO {
                 cliente.setTelefono(rs.getString("telefono"));
                 cliente.setCorreo(rs.getString("correo"));
 
-                Date fecha = rs.getDate("fecha_registro");
-                cliente.setFechaRegistro(fecha.toLocalDate());
+                String fecha = rs.getString("fecha_registro");
+
+                if (fecha != null && !fecha.isEmpty()) {
+                    cliente.setFechaRegistro(LocalDate.parse(fecha));
+                }
 
                 clientes.add(cliente);
             }
@@ -107,8 +110,8 @@ public class ClienteDAO {
             return false;
         }
     }
+
     public List<Cliente> obtenerTodos() {
         return listar();
     }
-
 }
