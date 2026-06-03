@@ -8,8 +8,7 @@ import java.sql.ResultSet;
 
 public class UsuarioDAO {
 
-    public boolean validarLogin(String usuario,
-                                String contrasena) {
+    public boolean validarLogin(String usuario, String contrasena) {
 
         String sql = """
                 SELECT *
@@ -19,26 +18,19 @@ public class UsuarioDAO {
                 AND estado = 'Activo'
                 """;
 
-        try {
-
-            Connection conexion =
-                    ConexionBD.conectar();
-
-            PreparedStatement ps =
-                    conexion.prepareStatement(sql);
+        try (Connection conexion = ConexionBD.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, usuario);
             ps.setString(2, contrasena);
 
-            ResultSet rs = ps.executeQuery();
-
-            return rs.next();
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
 
         } catch (Exception e) {
-
-            System.out.println(
-                    "Error: " + e.getMessage());
-
+            System.out.println("Error al validar login:");
+            e.printStackTrace();
             return false;
         }
     }

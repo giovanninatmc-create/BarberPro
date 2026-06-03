@@ -25,10 +25,12 @@ public class ReporteDAO {
     }
 
     public double calcularIngresosEstimados() {
+
         String sql = """
                 SELECT IFNULL(SUM(s.precio), 0) AS total
                 FROM cita c
-                INNER JOIN servicio s ON c.id_servicio = s.id_servicio
+                INNER JOIN servicio s
+                    ON c.id_servicio = s.id_servicio
                 WHERE c.estado = 'Programada'
                 """;
 
@@ -41,13 +43,15 @@ public class ReporteDAO {
             }
 
         } catch (Exception e) {
-            System.out.println("Error al calcular ingresos: " + e.getMessage());
+            System.out.println("Error al calcular ingresos:");
+            e.printStackTrace();
         }
 
         return 0;
     }
 
     private int contar(String sql) {
+
         try (Connection conexion = ConexionBD.conectar();
              PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -57,7 +61,8 @@ public class ReporteDAO {
             }
 
         } catch (Exception e) {
-            System.out.println("Error en reporte: " + e.getMessage());
+            System.out.println("Error en reporte:");
+            e.printStackTrace();
         }
 
         return 0;

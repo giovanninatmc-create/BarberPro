@@ -3,7 +3,9 @@ package dao;
 import conexion.ConexionBD;
 import modelo.Cliente;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +13,10 @@ import java.util.List;
 public class ClienteDAO {
 
     public boolean guardar(Cliente cliente) {
+
         String sql = """
-                INSERT INTO cliente(nombre, telefono, correo, fecha_registro)
+                INSERT INTO cliente
+                (nombre, telefono, correo, fecha_registro)
                 VALUES (?, ?, ?, ?)
                 """;
 
@@ -26,13 +30,15 @@ public class ClienteDAO {
 
             return ps.executeUpdate() > 0;
 
-        } catch (SQLException e) {
-            System.out.println("Error al guardar cliente: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error al guardar cliente:");
+            e.printStackTrace();
             return false;
         }
     }
 
     public List<Cliente> listar() {
+
         List<Cliente> clientes = new ArrayList<>();
 
         String sql = """
@@ -46,6 +52,7 @@ public class ClienteDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
+
                 Cliente cliente = new Cliente();
 
                 cliente.setIdCliente(rs.getInt("id_cliente"));
@@ -62,14 +69,16 @@ public class ClienteDAO {
                 clientes.add(cliente);
             }
 
-        } catch (SQLException e) {
-            System.out.println("Error al listar clientes: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error al listar clientes:");
+            e.printStackTrace();
         }
 
         return clientes;
     }
 
     public boolean actualizar(Cliente cliente) {
+
         String sql = """
                 UPDATE cliente
                 SET nombre = ?, telefono = ?, correo = ?
@@ -86,13 +95,15 @@ public class ClienteDAO {
 
             return ps.executeUpdate() > 0;
 
-        } catch (SQLException e) {
-            System.out.println("Error al actualizar cliente: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error al actualizar cliente:");
+            e.printStackTrace();
             return false;
         }
     }
 
     public boolean eliminar(int idCliente) {
+
         String sql = """
                 DELETE FROM cliente
                 WHERE id_cliente = ?
@@ -105,8 +116,9 @@ public class ClienteDAO {
 
             return ps.executeUpdate() > 0;
 
-        } catch (SQLException e) {
-            System.out.println("Error al eliminar cliente: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error al eliminar cliente:");
+            e.printStackTrace();
             return false;
         }
     }

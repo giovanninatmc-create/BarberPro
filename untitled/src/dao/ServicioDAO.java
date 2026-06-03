@@ -3,15 +3,19 @@ package dao;
 import conexion.ConexionBD;
 import modelo.Servicio;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioDAO {
 
     public boolean guardar(Servicio servicio) {
+
         String sql = """
-                INSERT INTO servicio(nombre, descripcion, duracion, precio, estado)
+                INSERT INTO servicio
+                (nombre, descripcion, duracion, precio, estado)
                 VALUES (?, ?, ?, ?, ?)
                 """;
 
@@ -26,17 +30,26 @@ public class ServicioDAO {
 
             return ps.executeUpdate() > 0;
 
-        } catch (SQLException e) {
-            System.out.println("Error al guardar servicio: " + e.getMessage());
+        } catch (Exception e) {
+
+            System.out.println("Error al guardar servicio:");
+            e.printStackTrace();
+
             return false;
         }
     }
 
     public List<Servicio> listar() {
+
         List<Servicio> servicios = new ArrayList<>();
 
         String sql = """
-                SELECT id_servicio, nombre, descripcion, duracion, precio, estado
+                SELECT id_servicio,
+                       nombre,
+                       descripcion,
+                       duracion,
+                       precio,
+                       estado
                 FROM servicio
                 ORDER BY id_servicio DESC
                 """;
@@ -46,29 +59,48 @@ public class ServicioDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
+
                 Servicio servicio = new Servicio();
 
-                servicio.setIdServicio(rs.getInt("id_servicio"));
-                servicio.setNombre(rs.getString("nombre"));
-                servicio.setDescripcion(rs.getString("descripcion"));
-                servicio.setDuracion(rs.getInt("duracion"));
-                servicio.setPrecio(rs.getDouble("precio"));
-                servicio.setEstado(rs.getString("estado"));
+                servicio.setIdServicio(
+                        rs.getInt("id_servicio"));
+
+                servicio.setNombre(
+                        rs.getString("nombre"));
+
+                servicio.setDescripcion(
+                        rs.getString("descripcion"));
+
+                servicio.setDuracion(
+                        rs.getInt("duracion"));
+
+                servicio.setPrecio(
+                        rs.getDouble("precio"));
+
+                servicio.setEstado(
+                        rs.getString("estado"));
 
                 servicios.add(servicio);
             }
 
-        } catch (SQLException e) {
-            System.out.println("Error al listar servicios: " + e.getMessage());
+        } catch (Exception e) {
+
+            System.out.println("Error al listar servicios:");
+            e.printStackTrace();
         }
 
         return servicios;
     }
 
     public boolean actualizar(Servicio servicio) {
+
         String sql = """
                 UPDATE servicio
-                SET nombre = ?, descripcion = ?, duracion = ?, precio = ?, estado = ?
+                SET nombre = ?,
+                    descripcion = ?,
+                    duracion = ?,
+                    precio = ?,
+                    estado = ?
                 WHERE id_servicio = ?
                 """;
 
@@ -84,13 +116,17 @@ public class ServicioDAO {
 
             return ps.executeUpdate() > 0;
 
-        } catch (SQLException e) {
-            System.out.println("Error al actualizar servicio: " + e.getMessage());
+        } catch (Exception e) {
+
+            System.out.println("Error al actualizar servicio:");
+            e.printStackTrace();
+
             return false;
         }
     }
 
     public boolean eliminar(int idServicio) {
+
         String sql = """
                 DELETE FROM servicio
                 WHERE id_servicio = ?
@@ -100,13 +136,18 @@ public class ServicioDAO {
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setInt(1, idServicio);
+
             return ps.executeUpdate() > 0;
 
-        } catch (SQLException e) {
-            System.out.println("Error al eliminar servicio: " + e.getMessage());
+        } catch (Exception e) {
+
+            System.out.println("Error al eliminar servicio:");
+            e.printStackTrace();
+
             return false;
         }
     }
+
     public List<Servicio> obtenerTodos() {
         return listar();
     }
